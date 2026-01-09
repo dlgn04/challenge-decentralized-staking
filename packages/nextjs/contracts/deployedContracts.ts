@@ -6,46 +6,20 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 const deployedContracts = {
   31337: {
-    ExampleExternalContract: {
-      address: "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+
+    DiceGame: {
+      address: "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1",
       abi: [
         {
           inputs: [],
-          name: "complete",
-          outputs: [],
           stateMutability: "payable",
-          type: "function",
+          type: "constructor",
         },
         {
           inputs: [],
-          name: "completed",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-      ],
-      inheritedFunctions: {},
-      deployedOnBlock: 19,
-    },
-    Staker: {
-      address: "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
-      abi: [
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "exampleExternalContractAddress",
-              type: "address",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "constructor",
+          name: "NotEnoughEther",
+          type: "error",
+>>>>>>> 0ffe813 (Complete Dice Game challenge: RiggedRoll exploit and deployment)
         },
         {
           anonymous: false,
@@ -53,7 +27,36 @@ const deployedContracts = {
             {
               indexed: true,
               internalType: "address",
+<<<<<<< HEAD
               name: "staker",
+=======
+              name: "player",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "roll",
+              type: "uint256",
+            },
+          ],
+          name: "Roll",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "winner",
+>>>>>>> 0ffe813 (Complete Dice Game challenge: RiggedRoll exploit and deployment)
               type: "address",
             },
             {
@@ -63,18 +66,20 @@ const deployedContracts = {
               type: "uint256",
             },
           ],
+<<<<<<< HEAD
           name: "Stake",
           type: "event",
         },
         {
           inputs: [
             {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          name: "balances",
+=======
+          name: "Winner",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "nonce",
           outputs: [
             {
               internalType: "uint256",
@@ -87,6 +92,128 @@ const deployedContracts = {
         },
         {
           inputs: [],
+          name: "prize",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "rollTheDice",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          stateMutability: "payable",
+          type: "receive",
+        },
+      ],
+      inheritedFunctions: {},
+      deployedOnBlock: 36810,
+    },
+    RiggedRoll: {
+      address: "0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address payable",
+              name: "diceGameAddress",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+          ],
+          name: "OwnableInvalidOwner",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "OwnableUnauthorizedAccount",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "diceGame",
+          outputs: [
+            {
+              internalType: "contract DiceGame",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+>>>>>>> 0ffe813 (Complete Dice Game challenge: RiggedRoll exploit and deployment)
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+<<<<<<< HEAD
+          name: "balances",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+=======
+>>>>>>> 0ffe813 (Complete Dice Game challenge: RiggedRoll exploit and deployment)
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+<<<<<<< HEAD
           name: "exampleExternalContract",
           outputs: [
             {
@@ -121,6 +248,57 @@ const deployedContracts = {
       ],
       inheritedFunctions: {},
       deployedOnBlock: 21,
+=======
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "riggedRoll",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address payable",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "withdraw",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          stateMutability: "payable",
+          type: "receive",
+        },
+      ],
+      inheritedFunctions: {
+        owner: "@openzeppelin/contracts/access/Ownable.sol",
+        renounceOwnership: "@openzeppelin/contracts/access/Ownable.sol",
+        transferOwnership: "@openzeppelin/contracts/access/Ownable.sol",
+      },
+      deployedOnBlock: 36811,
+>>>>>>> 0ffe813 (Complete Dice Game challenge: RiggedRoll exploit and deployment)
     },
   },
 } as const;

